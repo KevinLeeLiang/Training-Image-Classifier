@@ -21,10 +21,12 @@ import numpy as np
 # 输出图像的函数
 def imshow(img):
     img = img / 2 + 0.5     # unnormalize
+    # tensor转成numpy不可以用cuda，只能用CPU，所以img后要加cpu()
     npimg = img.cpu().numpy()
     plt.imshow(np.transpose(npimg, (1, 2, 0)))
     plt.show()
 
+# 这里需要注意，文档中没有if __name__ == '__main__':会导致报错
 if __name__ == '__main__':
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     print(device)
