@@ -140,7 +140,7 @@ for epoch in range(2):  # loop over the dataset multiple times
     running_loss = 0.0
     for i, data in enumerate(trainloader, 0):
         # get the inputs
-        #inputs, labels = inputs.to(device), labels.to(device)
+        #请记住，我们不得不将输入和目标在每一步都送入GPU：
         inputs, labels = data
         inputs = inputs.to(device)
         labels = labels.to(device)
