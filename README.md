@@ -122,6 +122,12 @@ net = Net()
 import torch.optim as optim
 
 criterion = nn.CrossEntropyLoss()
+```
+####  用GPU训练
+与将一个张量传递给GPU一样，可以这样将神经网络转移到GPU上。
+
+如果我们有cuda可用的话，让我们首先定义第一个设备为可见cuda设备：
+```python
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 net.to(device)
 optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
@@ -225,6 +231,7 @@ total = 0
 with torch.no_grad():
     for data in testloader:
         images, labels = data
+        # 请记住，我们不得不将输入和目标在每一步都送入GPU：
         images, labels = images.to(device), labels.to(device)
         outputs = net(images)
         outputs = outputs.to(device)
@@ -273,4 +280,4 @@ Accuracy of  frog : 66 %
 Accuracy of horse : 62 %
 Accuracy of  ship : 69 %
 Accuracy of truck : 61 %
-```  
+```
